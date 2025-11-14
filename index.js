@@ -9,7 +9,7 @@ app.set("views","./views");
 app.set("view engine","pug");
 
 route(app);
-
+app.use(express.static("public"));
 app.listen(port, () => {
   console.log(`App listening on port ${port}`)
 })
