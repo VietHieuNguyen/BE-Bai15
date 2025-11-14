@@ -1,3 +1,93 @@
-.test{
-  
+.header{
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+.header .inner-logo{
+  max-height: 50px;
+  max-width: 100%;
+}
+.header .inner-menu > ul{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.header .inner-menu > ul > li{
+  margin-left: 20px;
+}
+.footer{
+  background: #000;
+  color:#fff;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+/* ==== Product Card ==== */
+
+.product-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 0.25s ease;
+  height: 100%;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  font-family: Inter, sans-serif;
+}
+
+.product-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* ảnh */
+.product-item .inner-image img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  background: #f8fafc;
+}
+
+/* nội dung */
+.product-item .inner-content {
+  padding: 14px;
+}
+
+.inner-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 6px;
+}
+
+/* Giá */
+.inner-price-new {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.inner-price-old {
+  font-size: 14px;
+  color: #64748b;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+
+.inner-discount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #16a34a;
+  margin-top: 4px;
+}
+
+/* Nếu bạn muốn 2 giá nằm chung 1 dòng */
+.inner-price-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
