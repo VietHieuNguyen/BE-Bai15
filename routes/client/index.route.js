@@ -1,7 +1,7 @@
 const productsRoutes = require("./product.route");
-const controller = require("../../controllers/client/home.controller");
+const homeRoutes = require("./home.route")
 module.exports = (app) => {
-  app.get("/", controller.index);
+  app.use("/", homeRoutes);
 
   app.use("/products", productsRoutes);
 };
