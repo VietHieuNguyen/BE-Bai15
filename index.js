@@ -14,9 +14,13 @@ const route = require("./routes/client/index.route");
 
 const routeAdmin = require("./routes/admin/index.route");
 
+const systemConfig = require("./config/system")
 
 app.set("views","./views");
 app.set("view engine","pug");
+
+// AppLocal Variables
+app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 
 route(app);
