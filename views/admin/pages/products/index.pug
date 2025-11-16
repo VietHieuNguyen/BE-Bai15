@@ -2,6 +2,13 @@ extends ../../layouts/default.pug
 
 block main
   h1 Trang danh sách sản phẩm
+  .card.mb-3 
+    .card-header Bộ lọc và tìm kiếm
+    .card-body
+    each item in filterStatus
+        button(class=`btn btn-sm ml-1 btn-outline-success ${item.class}`
+        button-status=item.status)  #{item.name}
+        
 
   table.table.table-hover.table-sm
     thead
