@@ -20,8 +20,26 @@ module.exports.index = async(req,res) =>{
   if(objectSearch.regex){
     find.title = objectSearch.regex;
   }
+// Pagination
+  let objectPagination = {
+    currentPage: 1,
+    litmitItems:4
+  }
 
-  const products = await Product.find(find)
+  if(req.query.page){
+    objectPagination.currentPage= parseInt(req.query.page);
+  }
+  objectPagination.skip = (objectPagination.currentPage -1)*objectPagination.litmitItems
+
+  const countProducts =await Product.countDocuments(find)
+  const totalPage = Math.ceil(countProducts/objectPagination.litmitItems)
+  objectPagination.totalPage = totalPage;
+
+
+// End Pagination 
+
+
+  const products = await Product.find(find).limit(objectPagination.litmitItems).skip(objectPagination.skip)
 
   console.log(products)
 
@@ -29,7 +47,8 @@ module.exports.index = async(req,res) =>{
     pageTitle:"Danh sách sản phẩm",
     products: products,
     filterStatus: filterStatus,
-    keyword: objectSearch.keyword
+    keyword: objectSearch.keyword,
+    pagination: objectPagination
   })
 }
 
