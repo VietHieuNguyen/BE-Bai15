@@ -35,6 +35,4 @@ if(formSearch){
     window.location.href = url.href;
   });
 }
-
-
 // end Form search
