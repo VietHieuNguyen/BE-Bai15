@@ -1,5 +1,5 @@
 const express = require('express');
-
+const methodOverride = require('method-override')
 require("dotenv").config();
 
 
@@ -15,6 +15,8 @@ const route = require("./routes/client/index.route");
 const routeAdmin = require("./routes/admin/index.route");
 
 const systemConfig = require("./config/system")
+
+app.use(methodOverride('_method'))
 
 app.set("views","./views");
 app.set("view engine","pug");

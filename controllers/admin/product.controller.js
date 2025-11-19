@@ -51,3 +51,20 @@ module.exports.index = async(req,res) =>{
   })
 }
 
+// [GET] /admin/products/change-status/:status/:id
+
+const mongoose = require("mongoose");
+
+module.exports.changeStatus = async (req, res) => {
+  const { status, id } = req.params;
+  const allowed = ["active", "inactive"];
+
+  if (!allowed.includes(status) || !mongoose.isValidObjectId(id)) {
+     res.redirect("back")
+  }
+
+  await Product.updateOne({ _id: id }, { status });
+
+  const redirectUrl = req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
+  res.redirect(redirectUrl);
+};
