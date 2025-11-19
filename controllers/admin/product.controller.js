@@ -9,7 +9,7 @@ const paginationHelper = require("../../helpers/pagination")
 module.exports.index = async(req,res) =>{
   
   const filterStatus = filterStatusHelper(req.query);
-  console.log(filterStatus)
+  // console.log(filterStatus)
   let find={
     deleted: false,
   }
@@ -40,7 +40,7 @@ module.exports.index = async(req,res) =>{
 
   const products = await Product.find(find).limit(objectPagination.litmitItems).skip(objectPagination.skip)
 
-  console.log(products)
+  // console.log(products)
 
   res.render("admin/pages/products/index",{
     pageTitle:"Danh sách sản phẩm",
@@ -51,7 +51,7 @@ module.exports.index = async(req,res) =>{
   })
 }
 
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 
 const mongoose = require("mongoose");
 
@@ -67,4 +67,27 @@ module.exports.changeStatus = async (req, res) => {
 
   const redirectUrl = req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
   res.redirect(redirectUrl);
+};
+// [GET] /admin/products/change-status/:status/:id
+
+
+module.exports.changeMulti = async (req, res) => {
+  
+  const type = req.body.type;
+  const ids = req.body.ids.split(", ");
+
+  switch (type){
+    case "active":
+      await Product.updateMany({_id: {$in : ids}},{status: "active"})
+      break;
+    case "inactive":
+      await Product.updateMany({_id: {$in : ids}},{status: "inactive"})
+
+      break;
+    default:
+      break;
+  }
+  const redirectUrl = req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
+  res.redirect(redirectUrl);
+
 };
