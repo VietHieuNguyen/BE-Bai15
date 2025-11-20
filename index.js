@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const slug = require('mongoose-slug-updater');
+const multer = require('multer')
 
 require("dotenv").config();
 
