@@ -46,6 +46,7 @@ module.exports.index = async (req, res) => {
     filterStatus: filterStatus,
     keyword: objectSearch.keyword,
     pagination: objectPagination,
+    
   });
 };
 
@@ -63,11 +64,14 @@ module.exports.changeStatus = async (req, res) => {
 
   await Product.updateOne({ _id: id }, { status });
 
+  req.flash("success","cập nhật trạng thái thành công");
+  
+  
   const redirectUrl =
     req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
   res.redirect(redirectUrl);
 };
-// [PATCH] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-multi
 
 module.exports.changeMulti = async (req, res) => {
   const type = req.body.type;
@@ -76,13 +80,17 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
     case "active":
       await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      req.flash("success",`Cập nhật trạng thái thành công ${ids.length} sản phẩm`)
       break;
     case "inactive":
       await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+      req.flash("success",`Cập nhật trạng thái thành công ${ids.length} sản phẩm`)
 
       break;
     case "delete-all":
       await Product.updateMany({ _id: { $in: ids } }, { deleted:true,deletedAt:new Date() });
+      req.flash("success",`Đã xóa thành công ${ids.length} sản phẩm`)
+
       break;
     case "change-position":
       for (const item of ids){
