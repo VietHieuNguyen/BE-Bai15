@@ -185,7 +185,17 @@
   animation-duration: 0.5s;
   animation-fill-mode: both;
 }
-
+.image-preview{
+  width:150px;
+  height:auto;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 10px;
+}
+.image-preview[src=""]{
+  display: none;
+}
 @keyframes alert-hidden {
   from {
     right: 15px;
