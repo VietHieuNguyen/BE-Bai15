@@ -164,3 +164,49 @@ module.exports.createPost= async(req,res)=>{
   
   res.redirect(`${systemConfig.prefixAdmin}/products`)
 };
+
+//[GET] /admin/products/edit/:id
+module.exports.edit = async(req,res)=>{
+  try{
+    const find ={
+    deleted:false,
+    _id:req.params.id
+  }
+  
+  const product = await Product.findOne(find);
+  
+  res.render("admin/pages/products/edit", {
+  pageTitle: "Thêm Chỉnh sửa sản phẩm",
+  product:product
+  });
+  }catch{
+    req.flash("error","Không tồn tại sản phẩm này")
+    res.redirect(`${systemConfig.prefixAdmin}/products`)
+  }
+  
+};
+// [PATCH] /admin/products/edit:id
+module.exports.editPatch = async(req,res)=>{
+  
+  
+
+  req.body.price = parseInt(req.body.price)
+  req.body.discountPercentage = parseInt(req.body.discountPercentage)
+  req.body.stock = parseInt(req.body.stock)
+  req.body.position = parseInt(req.body.position)
+
+  
+  if(req.file){
+    req.body.thumbnail = `/uploads/${req.file.filename}`
+  }
+    
+  try {
+    await Product.updateOne({_id:req.params.id},req.body)
+  } catch (error) {
+    
+  }
+  req.flash("success",`Cập nhật sản phẩm ${req.body.title} thành công`)
+  const redirectUrl =
+    req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
+  res.redirect(redirectUrl);
+}
