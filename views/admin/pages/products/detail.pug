@@ -1,0 +1,41 @@
+extends ../../layouts/default.pug
+block main
+    h1 Chi tiet san pham
+    .product-detail
+        if (product.title)
+            h1 #{product.title}
+
+        if (product.price)
+            div.product-row Giá: 
+                b #{product.price}$
+
+        if (product.discountPercentage)
+            div.product-row Giảm giá: 
+                b #{product.discountPercentage}%
+
+        if (product.stock)
+            div.product-row Còn lại: 
+                b #{product.stock}
+
+        if (product.thumbnail)
+            div.product-row
+                img.product-thumb(src=product.thumbnail)
+
+        if (product.status)
+            div.product-row
+                span Trạng thái:
+                if (product.status === "active")
+                    span.badge.badge-success Hoạt động
+                else
+                    span.badge.badge-danger Dừng hoạt động 
+        if (product.position)
+            .product-row
+              b Vi tri: #{product.position} 
+        if (product.description)
+            .product-row
+              b Mô tả : #{product.description} 
+        a(
+            href=`${prefixAdmin}/products/edit/${product.id}`
+            class="btn btn-warning btn-sm"
+          ) Chỉnh sửa 
+    script(src="/admin/js/script.js") 
