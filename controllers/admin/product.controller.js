@@ -6,7 +6,6 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
 const systemConfig = require("../../config/system")
-
 module.exports.index = async (req, res) => {
   const filterStatus = filterStatusHelper(req.query);
   // console.log(filterStatus)
@@ -142,7 +141,7 @@ module.exports.createPost= async(req,res)=>{
     return;
   }
   
-  console.log(req.file)
+  // console.log(req.file)
 
   req.body.price = parseInt(req.body.price)
   req.body.discountPercentage = parseInt(req.body.discountPercentage)
@@ -155,10 +154,6 @@ module.exports.createPost= async(req,res)=>{
     req.body.position = parseInt(req.body.position)
 
   }
-  if(req.file){
-    req.body.thumbnail = `/uploads/${req.file.filename}`
-  }
-    
   const product = new Product(req.body);
   await product.save()
   
