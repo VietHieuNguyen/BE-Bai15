@@ -33,7 +33,7 @@ block main
               b Vi tri: #{product.position} 
         if (product.description)
             .product-row
-              b Mô tả : #{product.description} 
+              b Mô tả : !{product.description} 
         a(
             href=`${prefixAdmin}/products/edit/${product.id}`
             class="btn btn-warning btn-sm"
