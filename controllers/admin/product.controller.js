@@ -1,4 +1,4 @@
-// [GET] /admin/products
+
 const Product = require("../../models/product.model");
 
 const filterStatusHelper = require("../../helpers/filterStatus");
@@ -6,6 +6,7 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
 const systemConfig = require("../../config/system")
+// [GET] /admin/products
 module.exports.index = async (req, res) => {
   const filterStatus = filterStatusHelper(req.query);
   // console.log(filterStatus)
