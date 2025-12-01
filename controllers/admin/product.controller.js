@@ -27,7 +27,7 @@ module.exports.index = async (req, res) => {
   let objectPagination = paginationHelper(
     {
       currentPage: 1,
-      litmitItems: 4,
+      limitItems: 4
     },
     req.query,
     countProducts
@@ -45,7 +45,7 @@ module.exports.index = async (req, res) => {
   // End Sort 
   const products = await Product.find(find)
     .sort(sort)
-    .limit(objectPagination.litmitItems)
+    .limit(objectPagination.limitItems)
     .skip(objectPagination.skip);
 
   // console.log(products)
