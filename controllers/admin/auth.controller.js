@@ -3,8 +3,12 @@ const Account = require("../../models/account.model")
 const systemConfig = require("../../config/system")
 //[GET] /admin/auth/login
 module.exports.login =  (req,res) =>{
-  res.render("admin/pages/auth/login",{
+  if(req.cookies.token){
+    res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+  }else{
+    res.render("admin/pages/auth/login",{
     pageTitle : "Trang đăng nhập"})
+  }
 }
 //[POST] /admin/auth/login
 module.exports.loginPost = async (req,res) =>{
@@ -27,7 +31,7 @@ module.exports.loginPost = async (req,res) =>{
   }
   
   if(md5(password) != user.password){
-    req.flash("erorr","Sai mật khẩu")
+    req.flash("error","Sai mật khẩu")
     res.redirect(redirectUrl);
     return
   }
