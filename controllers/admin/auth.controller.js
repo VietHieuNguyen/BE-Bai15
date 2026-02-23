@@ -40,3 +40,9 @@ module.exports.loginPost = async (req,res) =>{
   res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
   
 }
+//[GET] /admin/auth/login
+module.exports.logout =  (req,res) =>{
+  //Xóa token
+  res.clearCookie("token")
+  res.redirect(`${systemConfig.prefixAdmin}/auth/login`)
+}
