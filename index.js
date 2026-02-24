@@ -7,7 +7,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const slug = require('mongoose-slug-updater');
 const multer = require('multer')
-
+const moment = require("moment")
 require("dotenv").config();
 
 
@@ -44,7 +44,7 @@ app.use('/tinymce',
 
 // AppLocal Variables
 app.locals.prefixAdmin = systemConfig.prefixAdmin
-
+app.locals.moment = moment
 
 route(app);
 routeAdmin(app);
