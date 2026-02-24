@@ -1,57 +1,64 @@
 extends ../../layouts/default.pug
 
 block main 
-  h1(class="mb-4") Nhóm quyền 
+  if(role.permissions.includes("roles_view"))
+    h1(class="mb-4") Nhóm quyền 
 
-  .card.mb-3 
-    .card-header Danh sách 
-    .card-body 
-      .row.mb-3
-        .col-8 
-        .col-6   
-          a(
-            href=`${prefixAdmin}/roles/create`
-            class="btn btn-outline-success"
-          ) +Thêm mới
+    .card.mb-3 
+      .card-header Danh sách 
+      .card-body 
+        .row.mb-3
+          .col-8 
+          .col-6   
+            if(role.permissions.includes("roles_create"))
 
-      table.table.table-hover.table-sm(checkbox-multi)
-        thead
-          tr
-            th 
-              input(type="checkbox" name="checkall")
-            th STT
-            th Nhóm quyền
-            th Mô tả ngắn
-            th Hành động
+              a(
+                href=`${prefixAdmin}/roles/create`
+                class="btn btn-outline-success"
+              ) +Thêm mới
 
-        tbody
-          if records && records.length
-            each record, index in records
-              tr
-                td
-                  input(
-                    type="checkbox"
-                    name="id"
-                    value=record.id
-                  )
-                td #{index + 1}
-                td #{record.title}
-                td #{record.description}
-                td
-                  a(
-                    href=`${prefixAdmin}/roles/detail/${record.id}`
-                    class="btn btn-secondary btn-sm mr-1"
-                  ) Chi tiết
-                  a(
-                    href=`${prefixAdmin}/roles/edit/${record.id}`
-                    class="btn btn-warning btn-sm mr-1"
-                  ) Sửa
-                  button(
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    button-delete
-                    data-id=record.id
-                  ) Xóa
-          else
+        table.table.table-hover.table-sm(checkbox-multi)
+          thead
             tr
-              td(colspan="5") Không có dữ liệu.
+              th 
+                input(type="checkbox" name="checkall")
+              th STT
+              th Nhóm quyền
+              th Mô tả ngắn
+              th Hành động
+
+          tbody
+            if records && records.length
+              each record, index in records
+                tr
+                  td
+                    input(
+                      type="checkbox"
+                      name="id"
+                      value=record.id
+                    )
+                  td #{index + 1}
+                  td #{record.title}
+                  td #{record.description}
+                  td
+                    a(
+                      href=`${prefixAdmin}/roles/detail/${record.id}`
+                      class="btn btn-secondary btn-sm mr-1"
+                    ) Chi tiết
+                    if(role.permissions.includes("roles_edit"))
+
+                      a(
+                        href=`${prefixAdmin}/roles/edit/${record.id}`
+                        class="btn btn-warning btn-sm mr-1"
+                      ) Sửa
+                    if(role.permissions.includes("roles_delete"))
+                    
+                      button(
+                        type="button"
+                        class="btn btn-danger btn-sm"
+                        button-delete
+                        data-id=record.id
+                      ) Xóa
+            else
+              tr
+                td(colspan="5") Không có dữ liệu.
