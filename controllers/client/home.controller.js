@@ -1,10 +1,18 @@
-
+const Product = require("../../models/product.model");
+const productsHelper = require("../../helpers/products")
 // [GET] /
-
-module.exports.index = async(req, res) => {
+module.exports.index = async (req, res) => {
+  // Lấy sản phẩm nổi bật
+  let find = {
+    deleted: false,
+    featured: "1",
+    status: "active",
+  };
   
-    res.render("client/pages/home/index",{
-      pageTitle: "Trang chủ",
-     
-    });
-  }
+  const productsFeatured = await Product.find(find);
+  const newProducts = productsHelper.priceNewProducts(productsFeatured)
+  res.render("client/pages/home/index", {
+    pageTitle: "Trang chủ",
+    productsFeatured: newProducts,
+  });
+};

@@ -45,13 +45,23 @@
 
 /* ảnh */
 .product-item .inner-image img {
-  width: 100%;
-  height: 220px;
+  width: 380px;
+  height: 300px;
   object-fit: cover;
   display: block;
-  background: #f8fafc;
+  
 }
-
+.product-item .inner-featured{
+  position: absolute;
+  top:0;
+  right:0;
+  background:green;
+  color: #ffff;
+  padding: 3px 6px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+}
 /* nội dung */
 .product-item .inner-content {
   padding: 14px;
