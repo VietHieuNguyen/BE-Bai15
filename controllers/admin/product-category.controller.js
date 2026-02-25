@@ -43,23 +43,28 @@ module.exports.createPost = async (req, res) => {
 };
 //[GET] /admin/products-category/edit/:id
 module.exports.edit = async (req, res) => {
-  try {
-    const id = req.params.id;
-    const data = await ProductCategory.findOne({
-      _id: id,
-      deleted: false,
-    });
-    const records = await ProductCategory.find({
-      deleted: false,
-    });
-    const newRecords = createTreeHelper.tree(records);
-    res.render("admin/pages/products-category/edit", {
-      pageTitle: "Trang chỉnh sửa danh mục sản phẩm",
-      data: data,
-      records: newRecords,
-    });
-  } catch (error) {
-    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+  const permissions = res.locals.role.permissions;
+  if (permissions.includes("products-category_create")) {
+    try {
+      const id = req.params.id;
+      const data = await ProductCategory.findOne({
+        _id: id,
+        deleted: false,
+      });
+      const records = await ProductCategory.find({
+        deleted: false,
+      });
+      const newRecords = createTreeHelper.tree(records);
+      res.render("admin/pages/products-category/edit", {
+        pageTitle: "Trang chỉnh sửa danh mục sản phẩm",
+        data: data,
+        records: newRecords,
+      });
+    } catch (error) {
+      res.redirect(`${systemConfig.prefixAdmin}/products-category`);
+    }
+  } else {
+    return;
   }
 };
 
@@ -72,7 +77,7 @@ module.exports.editPatch = async (req, res) => {
     {
       _id: id,
     },
-    req.body
+    req.body,
   );
 
   const redirectUrl =
