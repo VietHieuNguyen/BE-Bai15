@@ -143,3 +143,133 @@
   top: 0; /* Ngang hàng với thẻ li đang hover */
   right: 100%; /* Bay sang bên trái. Nếu muốn bay sang phải thì dùng: left: 100%; right: auto; */
 }
+/* product-detail container */
+.product-detail {
+  padding-bottom: 50px;
+}
+
+/* Style cho khung ảnh sản phẩm */
+.product-detail .inner-thumb img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px; /* Bo góc cho ảnh mềm mại hơn */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ tạo chiều sâu */
+  border: 1px solid #eee;
+}
+
+/* Style cho tiêu đề */
+.product-detail .inner-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+  color: #222;
+  line-height: 1.3;
+}
+
+/* Style cho danh mục */
+.product-detail .inner-category {
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #666;
+}
+
+.product-detail .inner-category a {
+  color: #2f5acf; /* Màu xanh dương hiện đại */
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.product-detail .inner-category a:hover {
+  text-decoration: underline;
+  color: #1a3b8c;
+}
+
+/* Style cho Giá mới (Giá bán) */
+.product-detail .inner-price-new {
+  color: #28a745; /* Màu xanh lá nổi bật */
+  font-weight: 700;
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+/* Style cho Giá cũ (Giá gốc) */
+.product-detail .inner-price-old {
+  color: #999;
+  font-size: 16px;
+  text-decoration: line-through; /* Gạch ngang giá cũ */
+  margin-bottom: 10px;
+}
+
+/* Style cho Phần trăm giảm giá */
+.product-detail .inner-percent {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #555;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.product-detail .inner-percent span {
+  color: #d70018; /* Màu đỏ cho phần trăm giảm */
+  font-weight: 700;
+  background-color: #fee2e2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Style cho Tồn kho */
+.product-detail .inner-stock {
+  font-size: 15px;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.product-detail .inner-stock span {
+  font-weight: 700;
+  color: #e67e22; /* Màu cam cảnh báo số lượng */
+}
+
+/* Style cho Form Thêm vào giỏ hàng */
+.product-detail form {
+  display: flex; /* Xếp ô nhập số lượng và nút bấm nằm ngang */
+  align-items: stretch;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.product-detail form input[name="quantity"] {
+  width: 100px; /* Giới hạn chiều rộng ô nhập số lượng */
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0 !important; /* Ghi đè class mb-2 của bootstrap */
+}
+
+.product-detail form button {
+  padding: 10px 30px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  flex: 1; /* Nút bấm chiếm phần không gian còn lại */
+  max-width: 300px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.product-detail form button:hover {
+  transform: translateY(-2px); /* Hiệu ứng nổi lên khi hover */
+  box-shadow: 0 4px 8px rgba(40, 167, 69, 0.3);
+}
+
+/* Style cho Mô tả sản phẩm */
+.product-detail .inner-desc {
+  line-height: 1.8;
+  color: #444;
+  font-size: 16px;
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
