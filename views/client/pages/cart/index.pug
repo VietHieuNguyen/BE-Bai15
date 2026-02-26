@@ -31,7 +31,7 @@ block main
                   td
                     img(src=item.productInfo.thumbnail, alt=item.productInfo.title width="80px")
                   td
-                    a(href=`/products/detail/:id`) #{item.productInfo.slug}
+                    a(href=`/products/details/${item.productInfo.slug}`) #{item.productInfo.title}
                   td #{item.productInfo.priceNew}$
                   td
                     input(

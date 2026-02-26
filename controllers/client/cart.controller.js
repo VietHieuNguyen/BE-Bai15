@@ -1,7 +1,7 @@
 const Cart = require("../../models/cart.model");
-const Product = require("../../models/product.model")
+const Product = require("../../models/product.model");
 
-const productsHelper = require("../../helpers/products")
+const productsHelper = require("../../helpers/products");
 
 //[POST] /cart/add/:productId
 module.exports.addPost = async (req, res) => {
@@ -13,7 +13,9 @@ module.exports.addPost = async (req, res) => {
     _id: cartId,
   });
 
-  const existProductInCart = cart.products.find((item) => item.product_id);
+  const existProductInCart = cart.products.find(
+    (item) => item.product_id === productId,
+  );
 
   if (existProductInCart) {
     const quantityNew = quantity + existProductInCart.quantity;
@@ -34,7 +36,6 @@ module.exports.addPost = async (req, res) => {
       quantity: quantity,
     };
 
-
     await Cart.updateOne(
       {
         _id: cartId,
@@ -43,40 +44,64 @@ module.exports.addPost = async (req, res) => {
         $push: { products: objectCart },
       },
     );
-    
   }
   req.flash("success", "Đã thêm sản phẩm vào giỏ hàng");
-    res.redirect(redirectUrl);
+  res.redirect(redirectUrl);
 };
 
-
 //[GET] /
-module.exports.index = async (req,res)=>{
+module.exports.index = async (req, res) => {
   const cartId = req.cookies.cartId;
   const cart = await Cart.findOne({
-    _id: cartId
+    _id: cartId,
   });
-  if(cart.products.length > 0){
-    for (const item of cart.products){
+  if (cart.products.length > 0) {
+    for (const item of cart.products) {
       const productId = item.product_id;
       const productInfo = await Product.findOne({
         _id: productId,
-
-      }).select("title thumbnail slug price discountPercentage")
+      }).select("title thumbnail slug price discountPercentage");
 
       productInfo.priceNew = productsHelper.priceNewProduct(productInfo);
 
-      item.productInfo = productInfo
+      item.productInfo = productInfo;
 
-      item.totalPrice = productInfo.priceNew * item.quantity
+      item.totalPrice = productInfo.priceNew * item.quantity;
     }
-    
   }
 
-  cart.totalPrice = cart.products.reduce((sum,item)=>sum + item.totalPrice,0)
+  cart.totalPrice = cart.products.reduce(
+    (sum, item) => sum + item.totalPrice,
+    0,
+  );
 
-  res.render("client/pages/cart/index",{
+  res.render("client/pages/cart/index", {
     pageTitle: "Trang giỏ hàng",
-    cartDetail: cart
-  })
-}
+    cartDetail: cart,
+  });
+};
+
+//[GET] /cart/delete/:productId
+module.exports.delete = async (req, res) => {
+  const cartId = req.cookies.cartId;
+  const productId = req.params.productId;
+
+  const redirectUrl = req.get("Referer");
+
+  await Cart.updateOne(
+    {
+      _id: cartId,
+    },
+    {
+      $pull: {
+        products: {
+          product_id: productId,
+        },
+      },
+    },
+  );
+
+  req.flash("success", "Đã xóa sản phẩm thành công");
+
+  res.redirect(redirectUrl);
+};
