@@ -105,3 +105,28 @@ module.exports.delete = async (req, res) => {
 
   res.redirect(redirectUrl);
 };
+
+
+//[GET] /cart/update/:productId/:quantity
+module.exports.update = async (req, res) => {
+  const cartId = req.cookies.cartId;
+  const productId = req.params.productId;
+  const quantity = req.params.quantity;
+
+  const redirectUrl = req.get("Referer");
+  await Cart.updateOne(
+      {
+        _id: cartId,
+        "products.product_id": productId,
+      },
+      {
+        $set: {
+          "products.$.quantity": quantity,
+        },
+      },
+    );
+
+
+  req.flash("success", "Cập nhật thành công");
+  res.redirect(redirectUrl);
+};
