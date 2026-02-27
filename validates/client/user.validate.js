@@ -43,3 +43,16 @@ module.exports.loginPost = (req,res,next)=>{
   }
   next();
 }
+
+module.exports.forgotPasswordPost = (req,res,next)=>{
+  
+  if(!req.body.email){
+    req.flash("error","Vui lòng nhập email")
+    const redirectUrl =
+    req.get("Referrer") || req.app.locals.prefixAdmin + "/products";
+    res.redirect(redirectUrl);
+    return 
+  }
+  
+  next();
+}
