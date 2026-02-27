@@ -1,11 +1,11 @@
 const User = require("../../models/user.model");
 const ForgotPassword = require("../../models/forgot-password.model");
-const Cart = require("../../models/cart.model")
+const Cart = require("../../models/cart.model");
 
 const md5 = require("md5");
 const genareHelper = require("../../helpers/generate");
 
-const sendMailHelper = require("../../helpers/sendmail")
+const sendMailHelper = require("../../helpers/sendmail");
 // [GET] /user/register
 module.exports.register = (req, res) => {
   res.render("client/pages/user/register", {
@@ -40,7 +40,7 @@ module.exports.login = (req, res) => {
   });
 };
 
-// [GET] /user/login
+// [POST] /user/login
 module.exports.loginPost = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
@@ -64,22 +64,30 @@ module.exports.loginPost = async (req, res) => {
     res.redirect(redirectUrl);
     return;
   }
+  const cart = await Cart.findOne({
+    user_id: user.id,
+  });
+  if (cart) {
+    res.cookie("cartId", cart.id);
+  } else {
+    await Cart.updateOne(
+      {
+        _id: req.cookies.cartId,
+      },
+      {
+        user_id: user.id,
+      },
+    );
+  }
   res.cookie("tokenUser", user.tokenUser);
 
   res.redirect("/");
-
-  await Cart.updateOne({
-    _id: req.cookies.cartId},
-    {
-      user_id: user.id
-    }
-  )
-
 };
 
 // [GET] /user/logout
 module.exports.logout = (req, res) => {
   res.clearCookie("tokenUser");
+  res.clearCookie("cartId");
   res.redirect("/");
 };
 
@@ -113,9 +121,9 @@ module.exports.forgotPasswordPost = async (req, res) => {
   const forgotPassword = new ForgotPassword(objectForgotPassword);
   await forgotPassword.save();
   // Nếu tồn tại email thì gửi otp qua email
-  const subject = "Mã OTP xác minh lấy lại mật khẩu"
-  const html = `Mã OTP để lấy lại mật khẩu là <b> ${otp} </b>. Thời hạn sử dụng là 3 phút`
-  sendMailHelper.sendMail(email,subject,html)
+  const subject = "Mã OTP xác minh lấy lại mật khẩu";
+  const html = `Mã OTP để lấy lại mật khẩu là <b> ${otp} </b>. Thời hạn sử dụng là 3 phút`;
+  sendMailHelper.sendMail(email, subject, html);
   res.redirect(`/user/password/otp?email=${email}`);
 };
 
@@ -175,14 +183,12 @@ module.exports.resetPasswordPost = async (req, res) => {
     },
   );
 
-  res.redirect("/")
+  res.redirect("/");
 };
 
 // [GET] /user/info
 module.exports.info = async (req, res) => {
-  
   res.render("client/pages/user/info", {
     pageTitle: "Thông tin tài khoản",
-   
   });
 };
