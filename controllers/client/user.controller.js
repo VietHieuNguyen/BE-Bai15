@@ -1,7 +1,9 @@
 const User = require("../../models/user.model");
+const ForgotPassword = require("../../models/forgot-password.model");
+const Cart = require("../../models/cart.model")
+
 const md5 = require("md5");
 const genareHelper = require("../../helpers/generate");
-const ForgotPassword = require("../../models/forgot-password.model");
 
 const sendMailHelper = require("../../helpers/sendmail")
 // [GET] /user/register
@@ -48,22 +50,31 @@ module.exports.loginPost = async (req, res) => {
     deleted: false,
   });
   if (!user) {
-    res.flash("error", "Email không tồn tại");
+    req.flash("error", "Email không tồn tại");
     res.redirect(redirectUrl);
     return;
   }
   if (md5(password) != user.password) {
-    res.flash("error", "Sai mật khẩu");
+    req.flash("error", "Sai mật khẩu");
     res.redirect(redirectUrl);
     return;
   }
   if (user.status === "inactive") {
-    res.flash("error", "Tài khoản đã bị khóa");
+    req.flash("error", "Tài khoản đã bị khóa");
     res.redirect(redirectUrl);
     return;
   }
   res.cookie("tokenUser", user.tokenUser);
+
   res.redirect("/");
+
+  await Cart.updateOne({
+    _id: req.cookies.cartId},
+    {
+      user_id: user.id
+    }
+  )
+
 };
 
 // [GET] /user/logout
@@ -165,4 +176,13 @@ module.exports.resetPasswordPost = async (req, res) => {
   );
 
   res.redirect("/")
+};
+
+// [GET] /user/info
+module.exports.info = async (req, res) => {
+  
+  res.render("client/pages/user/info", {
+    pageTitle: "Thông tin tài khoản",
+   
+  });
 };
