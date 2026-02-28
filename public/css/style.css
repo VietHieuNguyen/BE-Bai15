@@ -316,3 +316,87 @@
 a{
   text-decoration: none;
 }
+/* Chat 
+/* Khung Chat Tổng */
+.chat {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+/* Phần thân chứa tin nhắn */
+.chat .inner-body {
+  padding: 15px;
+  height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Tin nhắn đến (Incoming) */
+.chat .inner-incoming {
+  align-self: flex-start;
+  margin-bottom: 15px;
+}
+.chat .inner-incoming .inner-name {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.chat .inner-incoming .inner-content {
+  background: #fff;
+  padding: 8px 15px;
+  border-radius: 15px;
+  border: 1px solid #eee;
+}
+
+/* Tin nhắn đi (Outgoing) */
+.chat .inner-outgoing {
+  align-self: flex-end;
+  margin-bottom: 15px;
+}
+.chat .inner-outgoing .inner-content {
+  background: #007bff;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 15px;
+}
+
+/* Phần chân trang & Form (image_827cf7.png) */
+.chat .inner-foot {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  background: #fff;
+}
+
+.chat .inner-form {
+  display: flex;
+  align-items: center;
+}
+
+.chat .inner-form input {
+  flex: 1;
+  height: 32px;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  padding: 0 10px;
+  outline: none;
+}
+
+.chat .inner-form button {
+  border-radius: 15px;
+  border: 1px solid #FE5DA3;
+  background: #FE5DA3;
+  color: #fff;
+  height: 32px;
+  padding: 0 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.chat .inner-form button:hover {
+  opacity: 0.8;
+}
+end chat */
