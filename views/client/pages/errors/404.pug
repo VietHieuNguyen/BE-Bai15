@@ -1,0 +1,33 @@
+doctype html
+html
+  head
+    title 404 Not Found
+    link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
+    style.
+      .error-template { padding: 40px 15px; text-align: center; }
+      .error-actions { margin-top: 15px; margin-bottom: 15px; }
+      .error-actions .btn { margin-right: 10px; }
+      .error-details { font-size: 1.2rem; color: #6c757d; margin-bottom: 30px; }
+      h1 { font-size: 10rem; font-weight: 900; color: #343a40; margin: 0; }
+      h2 { font-size: 2rem; text-transform: uppercase; }
+
+  body
+    .container
+      .row
+        .col-md-12
+          .error-template
+            h1 404
+            h2 Rất tiếc! Không tìm thấy trang
+            .error-details
+              | Xin lỗi, trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.
+            .error-actions
+              button(
+                class="btn btn-primary btn-lg"
+                onclick="history.back()"
+              ) 
+                i.fas.home
+                |  Quay lại trang trước
+              a(
+                href="/"
+                class="btn btn-outline-secondary btn-lg"
+              ) Về trang chủ

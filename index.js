@@ -46,9 +46,14 @@ app.use('/tinymce',
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 app.locals.moment = moment
 
+//Routes
 route(app);
 routeAdmin(app);
-
+app.get("/:any", (req, res) => {
+  res.render("client/pages/errors/404", {
+    pageTitle: "404 Not Found"
+  });
+});
 
 app.use(express.static(`${__dirname}/public`));
 app.listen(port, () => {
