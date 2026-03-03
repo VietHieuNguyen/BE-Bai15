@@ -1,12 +1,12 @@
-.header{
+.header {
   border-bottom: 1px solid #ddd;
   padding: 10px 0;
 }
-.header .inner-logo{
+.header .inner-logo {
   max-height: 50px;
   max-width: 100%;
 }
-.header .inner-menu > ul{
+.header .inner-menu > ul {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -15,12 +15,12 @@
   justify-content: flex-end;
   flex-wrap: wrap;
 }
-.header .inner-menu > ul > li{
+.header .inner-menu > ul > li {
   margin-left: 20px;
 }
-.footer{
+.footer {
   background: #000;
-  color:#fff;
+  color: #fff;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -34,13 +34,13 @@
   overflow: hidden;
   transition: 0.25s ease;
   height: 100%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   font-family: Inter, sans-serif;
 }
 
 .product-item:hover {
   transform: translateY(-4px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
 /* ảnh */
@@ -49,13 +49,12 @@
   height: 300px;
   object-fit: cover;
   display: block;
-  
 }
-.product-item .inner-featured{
+.product-item .inner-featured {
   position: absolute;
-  top:0;
-  right:0;
-  background:green;
+  top: 0;
+  right: 0;
+  background: green;
   color: #ffff;
   padding: 3px 6px;
   font-weight: 600;
@@ -129,7 +128,7 @@
 
 /* 4. Hiệu ứng Hover đổi màu nền cho đẹp (tuỳ chọn) */
 .sub-menu ul li:hover {
-  background: #d4d4d4; 
+  background: #d4d4d4;
 }
 
 /* 5. Cốt lõi: Chỉ hiển thị ul con trực tiếp khi hover vào thẻ cha của nó */
@@ -313,7 +312,7 @@
 
 /* End Show Alert */
 
-a{
+a {
   text-decoration: none;
 }
 /* Chat 
@@ -386,8 +385,8 @@ a{
 
 .chat .inner-form button {
   border-radius: 15px;
-  border: 1px solid #FE5DA3;
-  background: #FE5DA3;
+  border: 1px solid #fe5da3;
+  background: #fe5da3;
   color: #fff;
   height: 32px;
   padding: 0 15px;
@@ -400,3 +399,13 @@ a{
   opacity: 0.8;
 }
 end chat */
+/* Emoji Icon */
+.tooltip {
+  visibility: hidden;
+  
+}
+.tooltip.shown {
+  visibility: visible;
+  opacity: 1;
+}
+/* End Emoji Icon  */
