@@ -1,4 +1,4 @@
-import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+import * as Popper from "https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js";
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
 if (formSendData) {
@@ -17,7 +17,6 @@ if (formSendData) {
 // SERVER_RETURN_MESSAGE
 
 socket.on("SERVER_RETURN_MESSAGE", (data) => {
-
   const myId = document.querySelector("[my-id]").getAttribute("my-id");
   const body = document.querySelector(".chat .inner-body");
 
@@ -42,34 +41,47 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
 
 // END SERVER_RETURN_MESSAGE
 
-
-// Scroll Chat to Bottom 
-const bodyChat = document.querySelector(".chat .inner-body")
-if(bodyChat){
+// Scroll Chat to Bottom
+const bodyChat = document.querySelector(".chat .inner-body");
+if (bodyChat) {
   bodyChat.scrollTop = bodyChat.scrollHeight;
 }
-//End  Scroll Chat to Bottom 
+//End  Scroll Chat to Bottom
 
-// Show Icon Chat 
+// Show Icon Chat
 // show popUp
 const buttonIcon = document.querySelector(".button-icon");
-if(buttonIcon){
-  const tooltip = document.querySelector('.tooltip')
-  Popper.createPopper(buttonIcon, tooltip)
+if (buttonIcon) {
+  const tooltip = document.querySelector(".tooltip");
+  Popper.createPopper(buttonIcon, tooltip);
   buttonIcon.onclick = () => {
-    tooltip.classList.toggle('shown')
-  }
+    tooltip.classList.toggle("shown");
+  };
 }
 //END  show popUp
 
-// Insert icon to Input 
+// Insert icon to Input
 const emojiPicker = document.querySelector("emoji-picker");
-if(emojiPicker){
-  const inputChat = document.querySelector(".chat .inner-form input[name='content']")
-  emojiPicker.addEventListener("emoji-click",(event)=>{
+if (emojiPicker) {
+  const inputChat = document.querySelector(
+    ".chat .inner-form input[name='content']",
+  );
+  emojiPicker.addEventListener("emoji-click", (event) => {
     const icon = event.detail.unicode;
     inputChat.value = inputChat.value + icon;
-  })
+  });
+  // Input Keyup
+  inputChat.addEventListener("keyup", () => {
+    socket.emit("CLIENT_SEND_TYPING", "show");
+  });
+  // End Input Keyup
 }
-// End Insert icon to Input 
+
+// End Insert icon to Input
 // End Show Icon Chat
+
+// SERVER_RETURN_TYPING
+socket.on("SERVER_RETURN_TYPING", (data) => {
+  console.log(data);
+});
+// End SERVER_RETURN_TYPING
