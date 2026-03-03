@@ -1,20 +1,29 @@
-const express = require('express');
-const path = require('path');
-const methodOverride = require('method-override');
-const flash = require('express-flash');
-const bodyParser = require('body-parser')
-const session = require('express-session')
-const cookieParser = require('cookie-parser')
-const slug = require('mongoose-slug-updater');
-const multer = require('multer')
-const moment = require("moment")
+const express = require("express");
+const path = require("path");
+const methodOverride = require("method-override");
+const flash = require("express-flash");
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
+const slug = require("mongoose-slug-updater");
+const multer = require("multer");
+const moment = require("moment");
+const http = require("http");
+const { Server } = require("socket.io");
+
 require("dotenv").config();
-
-
 
 const app = express();
 const port = process.env.PORT;
-const database = require("./config/database")
+
+// SOCKET IO
+const server = http.createServer(app);
+const io = new Server(server);
+io.on("connection", (socket) => {
+  console.log("a user connected", socket.id);
+});
+// END SocketIO 
+const database = require("./config/database");
 
 database.connect();
 
@@ -22,40 +31,42 @@ const route = require("./routes/client/index.route");
 
 const routeAdmin = require("./routes/admin/index.route");
 
-const systemConfig = require("./config/system")
+const systemConfig = require("./config/system");
 
-app.use(methodOverride('_method'))
+app.use(methodOverride("_method"));
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded())
+app.use(bodyParser.urlencoded());
 
-app.set("views",`${__dirname}/views`);
-app.set("view engine","pug");
+app.set("views", `${__dirname}/views`);
+app.set("view engine", "pug");
 
 // Flash
-app.use(cookieParser('DFASFDSAFDS'));
-app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(cookieParser("DFASFDSAFDS"));
+app.use(session({ cookie: { maxAge: 60000 } }));
 app.use(flash());
 // END Flash
 
-// TinyMCE  
-app.use('/tinymce',
-  express.static(path.join(__dirname, 'node_modules', 'tinymce')));
-// End TinyMCE 
+// TinyMCE
+app.use(
+  "/tinymce",
+  express.static(path.join(__dirname, "node_modules", "tinymce")),
+);
+// End TinyMCE
 
 // AppLocal Variables
-app.locals.prefixAdmin = systemConfig.prefixAdmin
-app.locals.moment = moment
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 //Routes
 route(app);
 routeAdmin(app);
 app.get("/:any", (req, res) => {
   res.render("client/pages/errors/404", {
-    pageTitle: "404 Not Found"
+    pageTitle: "404 Not Found",
   });
 });
 
 app.use(express.static(`${__dirname}/public`));
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`)
-})
+server.listen(port, () => {
+  console.log(`App listening on port ${port}`);
+});
