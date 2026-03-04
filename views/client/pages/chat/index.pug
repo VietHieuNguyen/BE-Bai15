@@ -6,11 +6,16 @@ block main
   +alert-success(5000)
   +alert-error(5000)
 
+  include ../../partials/list-btn-user.pug
   .container.my-3
     .row
       .col-12
         +box-head("Đoạn hội thoại")
 
+
+
+
+    
     .row
       .col-12
         .chat(my-id=user.id)
