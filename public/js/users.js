@@ -85,6 +85,7 @@ if (dataUsersAccept) {
       // Vẽ user ra giao diện
       const div = document.createElement("div");
       div.classList.add("col-6");
+      div.setAttribute("user-id",data.infoUserA._id);
       div.innerHTML = `
         <div class="box-user">
           <div class="inner-avatar">
@@ -143,3 +144,18 @@ if (dataUsersAccept) {
 
 //End Hiển thị thông tin kết bạn ngay lập tức
 //End SERVER_RETURN_INFO_ACCEPT_FRIEND
+
+
+//SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
+  socket.on("SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND", (data) => {
+    const userIdA = data.userIdA;
+    const boxUserRemove = document.querySelector(`[user-id="${userIdA}"]`)    
+    if(boxUserRemove){
+      const dataUsersAccept = document.querySelector("[data-users-accept]");
+      const userIdB = badgeUsersAccept.getAttribute("badge-users-accept")
+      if(userIdB === data.userIdB){
+        dataUsersAccept.removeChild(boxUserRemove);
+      }
+    }
+});
+//END SERVER_RETURN_USER_ID_CANCEL_ACCEPT_FRIEND
