@@ -572,3 +572,14 @@ a {
   display: inline-block;
 }
 /* End box-user */
+
+/* CSS cho status online */
+.box-user .inner-status{
+  font-size: 12px;
+  color: #37f937;
+  opacity: 0;
+}
+.box-user .inner-status[status="online"]{
+  opacity: 1;
+}
+/* END CSS cho status online */
