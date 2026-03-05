@@ -60,3 +60,19 @@ if (listBtnAcceptFriend.length > 0) {
   });
 }
 //End Chức năng chấp nhận kết bạn
+
+
+//Lấy ra số lượng lời mời kết bạn
+// SERVER_RETURN_LENGTH_ACCEPT_FRIEND
+const badgeUsersAccept = document.querySelector("[badge-users-accept]");
+if(badgeUsersAccept){
+  const userId = badgeUsersAccept.getAttribute("badge-users-accept")
+
+  socket.on("SERVER_RETURN_LENGTH_ACCEPT_FRIEND",(data)=>{
+    if(userId === data.userId){
+      badgeUsersAccept.innerHTML = data.lengthAcceptFriends;
+    }
+});
+}
+
+//END Lấy ra số lượng lời mời kết bạn
